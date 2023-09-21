@@ -12,10 +12,6 @@ import java.util.*;
 public class InMemoryHeadsXHandsService implements Action {
 
     private final int DEFAULT_ATTACK_POWER = 0;
-    protected int monstersCount;
-
-
-    protected int usersCount;
 
     private int monsterId = 0;
 
@@ -23,17 +19,7 @@ public class InMemoryHeadsXHandsService implements Action {
 
     private Scanner scanner = new Scanner(System.in);
 
-
-
-    public InMemoryHeadsXHandsService(int monsters, int users) {
-        this.monstersCount = monsters;
-        this.usersCount = users;
-    }
-
-    protected Map<Integer, Monster> monsters = new HashMap<>();
-
-    protected Map<Integer, User> users = new HashMap<>();
-
+    @Override
     public void fight () {
         boolean showMustGoOn = true;
         Monster monster = createMonster();
@@ -60,7 +46,8 @@ public class InMemoryHeadsXHandsService implements Action {
         finish(monster, user);
     }
 
-    private boolean attack (Creature attack, Creature defend) {
+    @Override
+    public boolean attack(Creature attack, Creature defend) {
         int damage = 0;
         for (int i = 0; i < attack.getAttackPower(); i++) {
             int destinyNumber = (int) (Math.random() * 7 + 1);
@@ -74,7 +61,8 @@ public class InMemoryHeadsXHandsService implements Action {
         return true;
     }
 
-    private void checkHealth (User user) {
+    @Override
+    public void checkHealth(User user) {
         if (user.getMAX_HEALTH() - user.getHealth() >= user.getPainkillerPower()) {
             if (user.getPainkiller() < 1) {
                 System.out.println("Увы, аптеек больше нет!");
@@ -96,7 +84,8 @@ public class InMemoryHeadsXHandsService implements Action {
         }
     }
 
-    private void finish(Creature monster, Creature user) {
+    @Override
+    public void finish(Creature monster, Creature user) {
         if (monster.getHealth() <= 0) {
             System.out.println("Пользователь победил!");
             System.out.println("Здоровье пользователя: " + user.getHealth());
@@ -127,7 +116,6 @@ public class InMemoryHeadsXHandsService implements Action {
         String name = "User_" + userId;
         User user = CreatureMapper.INSTANT.creatureToUser(createCreature(userId, name));
         userId++;
-
         return user;
     }
 
@@ -137,8 +125,8 @@ public class InMemoryHeadsXHandsService implements Action {
         return Math.abs(attack.getAttack() - defend.getDefense() +1);
     }
 
-
-    private List<Integer> generateParam () {
+    @Override
+    public List<Integer> generateParam() {
         List<Integer> params = new ArrayList<>();
         int attack = (int) (Math.random() * 31 + 1);
         params.add(attack);
