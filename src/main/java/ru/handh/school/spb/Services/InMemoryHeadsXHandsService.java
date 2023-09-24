@@ -60,8 +60,15 @@ public class InMemoryHeadsXHandsService implements Action {
         creatureTwo.setAttackPower(Math.abs(creatureTwo.getAttack() - creatureOne.getDefense()) + 1);
     }
 
+    /**
+     * Реализация метода fight(). Описание:
+     * В цикле while происходит бой. Он продолжается до тех пор, пока в переменную showMustGoOn не запишется значение
+     * false. Это произойдет, когда метод attack(Creature attack, Creature defend) вернёт false из-за того, что
+     * здоровье (health) Защищающегося существа стало < 1.
+     * Если атакован был пользователь, то после атаки проверяется его уровень здоровья и возможность использовать аптечку.
+     */
     @Override
-    public void fight () {
+    public void fight() {
         boolean showMustGoOn = true;
         Monster monster = createMonster();
         User user = createUser();
@@ -86,6 +93,12 @@ public class InMemoryHeadsXHandsService implements Action {
         finish(monster, user);
     }
 
+    /**
+     * Метод осуществляет атаку между существами.
+     * @param attack - атакующее существо.
+     * @param defend - защищающееся существо.
+     * @return - здоровье защищающегося существа >= 1. Если нет, то атакующее существо побеждает.
+     */
     @Override
     public boolean attack(Creature attack, Creature defend) {
         int damage = 0;
@@ -94,13 +107,20 @@ public class InMemoryHeadsXHandsService implements Action {
             if (destinyNumber == 5 || destinyNumber == 6) {
                 damage = (random.nextInt(attack.getDamage() + 1));
                 defend.setHealth(defend.getHealth() - damage);
-                System.out.println("Нанесён ущерб в " + damage + " пунктов!");
+                System.out.println("Нанесён ущерб в " + damage + " пунктов!" + "\n");
                 return defend.getHealth() >= 1;
             }
         }
         return true;
     }
 
+    /**
+     * Метод проверяет уровень здоровья пользователя.
+     * @param user - пользователь, которому был нанесён удар.
+     * Если разница первоначального уровня здоровья и уровень здоровья после удара >= целебным свойствам аптечки,
+     * то пользователю предлагается использовать аптечку (при условии их наличия и того,
+     * что удар не оказался смертельным для пользователя).
+     */
     @Override
     public void checkHealth(User user) {
         if ((user.getMAX_HEALTH() - user.getHealth() >= user.getPainkillerPower()) &&
