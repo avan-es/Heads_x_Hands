@@ -30,6 +30,6 @@ public class User extends Creature {
                 ", damage=" + damage +
                 ", attackPower=" + attackPower +
                 ", painkiller=" + painkiller +
-                ", painkiller=" + painkillerPower + '}';
+                ", painkillerPower=" + painkillerPower + '}';
     }
 }
