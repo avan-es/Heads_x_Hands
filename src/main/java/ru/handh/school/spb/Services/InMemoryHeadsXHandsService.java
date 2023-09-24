@@ -1,6 +1,5 @@
 package ru.handh.school.spb.Services;
 
-import lombok.Builder;
 import ru.handh.school.spb.Creatures.Creature;
 import ru.handh.school.spb.Creatures.CreatureMapper;
 import ru.handh.school.spb.Creatures.Monster;
@@ -19,17 +18,18 @@ public class InMemoryHeadsXHandsService implements Action {
 
     private Scanner scanner = new Scanner(System.in);
 
+    private Random random = new Random();
+
     @Override
     public void fight () {
         boolean showMustGoOn = true;
         Monster monster = createMonster();
         User user = createUser();
-        monster.setAttackPower(Math.abs(user.getAttack() - monster.getDefense()) + 1);
-        user.setAttackPower(Math.abs(monster.getAttack() - user.getDefense()) + 1);
+        setAttackPower(monster, user);
         System.out.println("Создан монстр с параметрами: " + "\n" + monster + "\n");
         System.out.println("Создан пользователь с параметрами: " + "\n" + user + "\n");
         while (showMustGoOn) {
-            switch ((int) (Math.random() * 2)) {
+            switch (random.nextInt(2 + 1)) {
                 case 0:
                     System.out.println("Монстр атакует!");
                     showMustGoOn = attack(monster, user);
@@ -50,9 +50,9 @@ public class InMemoryHeadsXHandsService implements Action {
     public boolean attack(Creature attack, Creature defend) {
         int damage = 0;
         for (int i = 0; i < attack.getAttackPower(); i++) {
-            int destinyNumber = (int) (Math.random() * 7 + 1);
+            int destinyNumber = random.nextInt(6 + 1);
             if (destinyNumber == 5 || destinyNumber == 6) {
-                damage = ((int) (Math.random() * (attack.getDamage() + 1)));
+                damage = (random.nextInt(attack.getDamage() + 1));
                 defend.setHealth(defend.getHealth() - damage);
                 System.out.println("Нанесён ущерб в " + damage + " пунктов!");
                 return defend.getHealth() >= 1;
@@ -61,11 +61,17 @@ public class InMemoryHeadsXHandsService implements Action {
         return true;
     }
 
+    private void setAttackPower(Creature creatureOne, Creature creatureTwo) {
+        creatureOne.setAttackPower(Math.abs(creatureOne.getAttack() - creatureTwo.getDefense()) + 1);
+        creatureTwo.setAttackPower(Math.abs(creatureTwo.getAttack() - creatureOne.getDefense()) + 1);
+    }
+
     @Override
     public void checkHealth(User user) {
-        if (user.getMAX_HEALTH() - user.getHealth() >= user.getPainkillerPower()) {
+        if ((user.getMAX_HEALTH() - user.getHealth() >= user.getPainkillerPower()) &&
+                (user.getHealth() > 0)) {
             if (user.getPainkiller() < 1) {
-                System.out.println("Увы, аптеек больше нет!");
+                System.out.println("Увы, аптечек больше нет!");
             } else {
                 System.out.println("Нужно подлечиться. Осталось " + user.getPainkiller() + " аптечки (-чка)." + "\n"
                         + "1 - воспользоваться аптечкой." + "\n"
@@ -74,7 +80,7 @@ public class InMemoryHeadsXHandsService implements Action {
                 switch (command) {
                     case 1:
                         user.setHealth(user.getHealth() + user.getPainkillerPower());
-                        System.out.println("Аптечка применина! Текущий уровень здоровья: " +  user.getHealth());
+                        System.out.println("Аптечка применена! Текущий уровень здоровья: " +  user.getHealth());
                         user.setPainkiller((byte) (user.getPainkiller() - 1));
                         break;
                     default:
@@ -106,16 +112,14 @@ public class InMemoryHeadsXHandsService implements Action {
     @Override
     public Monster createMonster() {
         String name = "Monster_" + monsterId;
-        Monster monster = CreatureMapper.INSTANT.creatureToMonster(createCreature(monsterId, name));
-        monsterId++;
+        Monster monster = CreatureMapper.INSTANT.creatureToMonster(createCreature(monsterId++, name));
         return monster;
     }
 
     @Override
     public User createUser() {
         String name = "User_" + userId;
-        User user = CreatureMapper.INSTANT.creatureToUser(createCreature(userId, name));
-        userId++;
+        User user = CreatureMapper.INSTANT.creatureToUser(createCreature(userId++, name));
         return user;
     }
 
@@ -128,13 +132,13 @@ public class InMemoryHeadsXHandsService implements Action {
     @Override
     public List<Integer> generateParam() {
         List<Integer> params = new ArrayList<>();
-        int attack = (int) (Math.random() * 31 + 1);
+        int attack = random.nextInt(30) + 1;
         params.add(attack);
-        int defense = (int) (Math.random() * 31 + 1);
+        int defense = random.nextInt(30) + 1;
         params.add(defense);
-        int health = (int) (Math.random() * 101 + 0);
+        int health = random.nextInt(100) + 1;
         params.add(health);
-        int damage = (int) (Math.random() * 16 + 5);
+        int damage = random.nextInt(14) + 1;
         params.add(damage);
         return params;
     }
