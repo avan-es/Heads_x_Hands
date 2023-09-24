@@ -1,5 +1,9 @@
 package ru.handh.school.spb.Creatures;
 
+/**
+ * Monster - дочерний класс Creature.
+ * */
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

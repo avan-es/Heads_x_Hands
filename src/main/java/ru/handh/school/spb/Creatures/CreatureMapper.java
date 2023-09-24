@@ -1,5 +1,8 @@
 package ru.handh.school.spb.Creatures;
 
+/**
+ * CreatureMapper - маппер объектов Creature в его разновидности.
+ * */
 public enum CreatureMapper {
     INSTANT;
 

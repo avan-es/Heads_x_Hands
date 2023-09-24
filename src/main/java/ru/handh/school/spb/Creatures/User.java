@@ -1,5 +1,14 @@
 package ru.handh.school.spb.Creatures;
 
+/**
+ * User - дочерний класс Creature.
+ * Имеет дополнительные поля:
+ *
+ * painkiller - количество аптечек (по умолчанию равное 4);
+ * painkillerPower - на сколько пунктов лечит 1 аптечка. Равно 30% от первоначального здоровья.
+ * MAX_HEALTH - хранит первоначальный уровень здоровья.
+ * */
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
