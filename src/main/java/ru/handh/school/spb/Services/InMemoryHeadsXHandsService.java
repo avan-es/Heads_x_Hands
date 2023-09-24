@@ -21,6 +21,46 @@ public class InMemoryHeadsXHandsService implements Action {
     private Random random = new Random();
 
     @Override
+    public Creature createCreature(int id, String name) {
+        List<Integer> params = generateParam();
+        return new Creature(id, name, params.get(0), params.get(1), params.get(2), params.get(3), DEFAULT_ATTACK_POWER);
+    }
+
+    @Override
+    public List<Integer> generateParam() {
+        List<Integer> params = new ArrayList<>();
+        int attack = random.nextInt(30) + 1;
+        params.add(attack);
+        int defense = random.nextInt(30) + 1;
+        params.add(defense);
+        int health = random.nextInt(100) + 1;
+        params.add(health);
+        int damage = random.nextInt(9) + 6;
+        params.add(damage);
+        return params;
+    }
+
+    @Override
+    public Monster createMonster() {
+        String name = "Monster_" + monsterId;
+        Monster monster = CreatureMapper.INSTANT.creatureToMonster(createCreature(monsterId++, name));
+        return monster;
+    }
+
+    @Override
+    public User createUser() {
+        String name = "User_" + userId;
+        User user = CreatureMapper.INSTANT.creatureToUser(createCreature(userId++, name));
+        return user;
+    }
+
+    @Override
+    public void setAttackPower(Creature creatureOne, Creature creatureTwo) {
+        creatureOne.setAttackPower(Math.abs(creatureOne.getAttack() - creatureTwo.getDefense()) + 1);
+        creatureTwo.setAttackPower(Math.abs(creatureTwo.getAttack() - creatureOne.getDefense()) + 1);
+    }
+
+    @Override
     public void fight () {
         boolean showMustGoOn = true;
         Monster monster = createMonster();
@@ -61,11 +101,6 @@ public class InMemoryHeadsXHandsService implements Action {
         return true;
     }
 
-    private void setAttackPower(Creature creatureOne, Creature creatureTwo) {
-        creatureOne.setAttackPower(Math.abs(creatureOne.getAttack() - creatureTwo.getDefense()) + 1);
-        creatureTwo.setAttackPower(Math.abs(creatureTwo.getAttack() - creatureOne.getDefense()) + 1);
-    }
-
     @Override
     public void checkHealth(User user) {
         if ((user.getMAX_HEALTH() - user.getHealth() >= user.getPainkillerPower()) &&
@@ -102,46 +137,5 @@ public class InMemoryHeadsXHandsService implements Action {
             System.out.println("Здоровье пользователя: " + user.getHealth());
         }
     }
-
-    @Override
-    public Creature createCreature(int id, String name) {
-        List<Integer> params = generateParam();
-        return new Creature(id, name, params.get(0), params.get(1), params.get(2), params.get(3), DEFAULT_ATTACK_POWER);
-    }
-
-    @Override
-    public Monster createMonster() {
-        String name = "Monster_" + monsterId;
-        Monster monster = CreatureMapper.INSTANT.creatureToMonster(createCreature(monsterId++, name));
-        return monster;
-    }
-
-    @Override
-    public User createUser() {
-        String name = "User_" + userId;
-        User user = CreatureMapper.INSTANT.creatureToUser(createCreature(userId++, name));
-        return user;
-    }
-
-
-    @Override
-    public int calculateAttackPower(Creature attack, Creature defend) {
-        return Math.abs(attack.getAttack() - defend.getDefense() +1);
-    }
-
-    @Override
-    public List<Integer> generateParam() {
-        List<Integer> params = new ArrayList<>();
-        int attack = random.nextInt(30) + 1;
-        params.add(attack);
-        int defense = random.nextInt(30) + 1;
-        params.add(defense);
-        int health = random.nextInt(100) + 1;
-        params.add(health);
-        int damage = random.nextInt(14) + 1;
-        params.add(damage);
-        return params;
-    }
-
 
 }
