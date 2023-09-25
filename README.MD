@@ -1,1 +1,1 @@
-Мой TG: https://t.me/ABGRTA
+Мой [Telegram](https://t.me/ABGRTA)
