@@ -107,10 +107,13 @@ public class InMemoryHeadsXHandsService implements Action {
             if (destinyNumber == 5 || destinyNumber == 6) {
                 damage = (random.nextInt(attack.getDamage() + 1));
                 defend.setHealth(defend.getHealth() - damage);
+                System.out.println("Кости Судьбы на стороне " + attack.getClass().getSimpleName() + "! Они показали " +
+                        destinyNumber + ". Можно нанести удар!");
                 System.out.println("Нанесён ущерб в " + damage + " пунктов!" + "\n");
                 return defend.getHealth() >= 1;
             }
         }
+        System.out.println("Увы, Кости Судьбы не благоволят Вам! Нанести удар не вышло! (Ни 5, ни 6 не выпали!)");
         return true;
     }
 
