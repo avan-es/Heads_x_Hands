@@ -8,7 +8,7 @@ import ru.handh.school.spb.Interface.Action;
 
 import java.util.*;
 
-public class InMemoryHeadsXHandsService implements Action {
+public class StandardModeHeadsXHandsService implements Action {
 
     private final int DEFAULT_ATTACK_POWER = 0;
 

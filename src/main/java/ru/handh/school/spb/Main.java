@@ -1,6 +1,6 @@
 package ru.handh.school.spb;
 
-import ru.handh.school.spb.Services.InMemoryHeadsXHandsService;
+import ru.handh.school.spb.Services.StandardModeHeadsXHandsService;
 
 import java.util.Scanner;
 
@@ -14,8 +14,8 @@ public class Main {
             int command = scanner.nextInt();
             switch (command){
                 case 1:
-                    InMemoryHeadsXHandsService inMemoryHeadsXHandsService = new InMemoryHeadsXHandsService();
-                    inMemoryHeadsXHandsService.fight();
+                    StandardModeHeadsXHandsService standardModeHeadsXHandsService = new StandardModeHeadsXHandsService();
+                    standardModeHeadsXHandsService.fight();
                     break;
                 case 0:
                     System.out.println("Отключение прошло успешно!");
