@@ -107,8 +107,8 @@ public class StandardModeHeadsXHandsService implements Action {
             if (destinyNumber == 5 || destinyNumber == 6) {
                 damage = (random.nextInt(attack.getDamage() + 1));
                 defend.setHealth(defend.getHealth() - damage);
-                System.out.println("Кости Судьбы на стороне " + attack.getClass().getSimpleName() + "! Они показали " +
-                        destinyNumber + ". Можно нанести удар!");
+                System.out.println("Кости Судьбы на стороне " + attack.getClass().getSimpleName() + "! Они показали "
+                        + destinyNumber + ". Можно нанести удар!");
                 System.out.println("Нанесён ущерб в " + damage + " пунктов!" + "\n");
                 return defend.getHealth() >= 1;
             }
@@ -126,8 +126,8 @@ public class StandardModeHeadsXHandsService implements Action {
      */
     @Override
     public void checkHealth(User user) {
-        if ((user.getMAX_HEALTH() - user.getHealth() >= user.getPainkillerPower()) &&
-                (user.getHealth() > 0)) {
+        if ((user.getMAX_HEALTH() - user.getHealth() >= user.getPainkillerPower())
+                && (user.getHealth() > 0)) {
             if (user.getPainkiller() < 1) {
                 System.out.println("Увы, аптечек больше нет!");
             } else {
