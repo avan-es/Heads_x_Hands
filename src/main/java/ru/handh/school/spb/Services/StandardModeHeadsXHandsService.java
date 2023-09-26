@@ -134,9 +134,9 @@ public class StandardModeHeadsXHandsService implements Action {
                 System.out.println("Нужно подлечиться. Осталось " + user.getPainkiller() + " аптечки (-чка)." + "\n"
                         + "1 - воспользоваться аптечкой." + "\n"
                         + "Что угодно - оставить на потом.");
-                int command = scanner.nextInt();
+                String command = scanner.nextLine();
                 switch (command) {
-                    case 1:
+                    case "1":
                         user.setHealth(user.getHealth() + user.getPainkillerPower());
                         System.out.println("Аптечка применена! Текущий уровень здоровья: " +  user.getHealth());
                         user.setPainkiller((byte) (user.getPainkiller() - 1));
