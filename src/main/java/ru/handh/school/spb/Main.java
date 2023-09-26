@@ -11,17 +11,16 @@ public class Main {
 
         while (true) {
             printMenu();
-            int command = scanner.nextInt();
+            String command = scanner.nextLine();
             switch (command){
-                case 1:
+                case "1":
                     StandardModeHeadsXHandsService standardModeHeadsXHandsService = new StandardModeHeadsXHandsService();
                     standardModeHeadsXHandsService.fight();
                     break;
-                case 0:
+                case "0":
                     System.out.println("Отключение прошло успешно!");
                     return;
                 default:
-                    printMenu();
                     break;
             }
         }
