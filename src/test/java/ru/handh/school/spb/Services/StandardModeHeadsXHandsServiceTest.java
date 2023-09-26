@@ -105,15 +105,6 @@ class StandardModeHeadsXHandsServiceTest {
     }
 
     @Test
-    void fight() {
-    }
-
-    @Test
-    void attack() {
-    }
-
-
-    @Test
     @DisplayName("Тест на использование одной аптечки.")
     void checkHealthX1() {
         User user = service.createUser();
